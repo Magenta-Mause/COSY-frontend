@@ -8,7 +8,7 @@
 	"files": {
 		"includes": [
 			"src/**",
-			"!src/frontend.tsx",
+			"!src/app.tsx",
 			"!src/routeTree.gen.ts",
 			"!src/index.ts"
 		]

@@ -24,6 +24,7 @@
       "@components/*": ["./src/components/*"],
       "@types/*": ["./src/types/*"],
       "@/*": ["./src/*"],
+      "@config": ["./src/config.ts"]
     },
 
     // Some stricter flags (disabled by default)
