@@ -3,7 +3,7 @@ import { Card } from "@components/ui/card";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
-export const Route = createFileRoute("/redirected/$counter")({
+export const Route = createFileRoute("/redirected_/$counter")({
   component: Redirected,
 });
 
