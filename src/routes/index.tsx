@@ -8,21 +8,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [counter, setCounter] = useState(0);
-  const navigate = useNavigate();
-
-  const increaseCounter = () => {
-    setCounter((c) => ++c);
-  };
-
-  const redirectUser = () => {
-    navigate({
-      to: `/redirected/$counter`,
-      params: {
-        counter,
-      },
-    });
-  };
 
   return (
     <div
@@ -35,32 +20,8 @@ function Index() {
       items-center
     "
     >
-      {/*
-        (maybe) TODO: change Card component
-        s.t. side padding is automatically enforced
-      */}
-      <Card
-        className="
-            px-5
-            w-fit
-            flex
-            flex-col
-            items-center
-            "
-      >
-        <span>Clicks: {counter}</span>
-        <div
-          className="
-          flex
-          flex-row
-          gap-5
-        "
-        >
-          <Button onClick={increaseCounter}>Click me!</Button>
-          <Button onClick={redirectUser}>Don't click me!</Button>
-        </div>
-      </Card>
-    </div>
+
+   </div>
   );
 }
 
