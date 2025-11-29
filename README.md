@@ -78,6 +78,24 @@ Please place any modified components under `./src/components/custom/[modified co
 
 
 ### Common Pitfalls
+
+### API Client Generation (Orval)
+We use Orval to automatically generate TypeScript types and React Query hooks from our backend.
+
+If the backend API has been updated, you need to sync the changes to the frontend manually:
+
+1.  Make sure your backend is running locally.
+2.  Copy the raw JSON content from `http://localhost:8080/api/v3/api-docs`.
+3.  Paste the content into the local `./openapi-backend.json` file.
+4.  Run the generation command:
+    ```sh
+    bunx orval
+    ```
+
+**Pro Tip:** If you are on Mac/Linux (or use Git Bash), you can do this in one line:
+```sh
+curl http://localhost:8080/api/v3/api-docs > openapi-backend.json && bunx orval
+
 #### Tanstack Router Error
 Hot reloading for new routes does not work currently. When you run `bun run dev`, tanstack router generates a new route tree for you which should fix the issue.
 If you need to regenerate the route tree while bun is running in development mode, please execute:
