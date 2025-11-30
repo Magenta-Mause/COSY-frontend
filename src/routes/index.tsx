@@ -1,29 +1,13 @@
-import CreateGameServer from "@components/CreateGameServer/CreateGameServer";
-import { Button } from "@components/ui/button";
-import { Card } from "@components/ui/card";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import GameServerConfigurationsDisplay from "@components/display/GameServerConfiguration/GameServerConfigurationsDisplay/GameServerConfigurationsDisplay.tsx";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTypedSelector } from "@/stores/rootReducer.ts";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
-  const [counter, setCounter] = useState(0);
-  const navigate = useNavigate();
-
-  const increaseCounter = () => {
-    setCounter((c) => ++c);
-  };
-
-  const redirectUser = () => {
-    navigate({
-      to: `/redirected/$counter`,
-      params: {
-        counter,
-      },
-    });
-  };
+  const gameServers = useTypedSelector((state) => state.gameServerConfigurationSliceReducer.data);
 
   return (
     <div
@@ -36,32 +20,7 @@ function Index() {
       items-center
     "
     >
-      {/*
-        (maybe) TODO: change Card component
-        s.t. side padding is automatically enforced
-      */}
-      <Card
-        className="
-            px-5
-            w-fit
-            flex
-            flex-col
-            items-center
-            "
-      >
-        <span>Clicks: {counter}</span>
-        <div
-          className="
-          flex
-          flex-row
-          gap-5
-        "
-        >
-          <Button onClick={increaseCounter}>Click me!</Button>
-          <Button onClick={redirectUser}>Don't click me!</Button>
-        </div>
-      </Card>
-      <CreateGameServer />
+      <GameServerConfigurationsDisplay gameServerConfigurations={gameServers} />
     </div>
   );
 }
