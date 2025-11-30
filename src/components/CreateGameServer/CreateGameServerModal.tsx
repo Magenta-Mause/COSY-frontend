@@ -1,7 +1,8 @@
 import { Button } from "@components/ui/button";
-import { DialogClose, DialogContent, DialogFooter } from "@components/ui/dialog";
+import { DialogContent, DialogFooter } from "@components/ui/dialog";
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Step1 from "./CreationSteps/Step1";
-import { useState, type Dispatch, type SetStateAction } from "react";
 import Step2 from "./CreationSteps/Step2";
 import Step3 from "./CreationSteps/Step3";
 
@@ -14,6 +15,8 @@ function createStepKey(step: number) {
 }
 
 export default function CreateGameServerModal({ setModalOpen }: Props) {
+  const { t } = useTranslation();
+
   const [step, setStep] = useState(0);
   const CREATION_STEPS = [
     <Step1 key={createStepKey(0)} />,
@@ -35,7 +38,7 @@ export default function CreateGameServerModal({ setModalOpen }: Props) {
       {CREATION_STEPS[step]}
       <DialogFooter>
         <Button variant="outline" onClick={() => setStep(step - 1)} disabled={step === 0}>
-          Back
+          {t("components.CreateGameServer.backButton")}
         </Button>
         <Button
           type="submit"
@@ -46,7 +49,9 @@ export default function CreateGameServerModal({ setModalOpen }: Props) {
               : ""
           }
         >
-          {isLastStep ? "Create Server" : "Next Step"}
+          {isLastStep
+            ? t("components.CreateGameServer.createServerButton")
+            : t("components.CreateGameServer.nextStepButton")}
         </Button>
       </DialogFooter>
     </DialogContent>

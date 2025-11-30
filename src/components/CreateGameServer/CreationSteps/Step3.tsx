@@ -1,59 +1,85 @@
-import { DialogDescription, DialogTitle } from "@components/ui/dialog";
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
-import { Input } from "@components/ui/input";
 import FieldKeyValueInput from "@components/FieldKeyValueInput/FieldKeyValueInput";
+import { DialogDescription, DialogTitle } from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 
 export default function Step3() {
+  const { t } = useTranslation();
   const [envVars, setEnvVars] = useState<Array<{ key: string; value: string }>>([]);
   const [volumeMounts, setVolumeMounts] = useState<Array<{ key: string; value: string }>>([]);
 
   return (
     <div className="w-full max-w-md">
-      <DialogTitle>Create Game Server Step 3: Configure your Server</DialogTitle>
-      <DialogDescription>Here you can configure your server.</DialogDescription>
+      <DialogTitle>{t("components.CreateGameServer.steps.step3.title")}</DialogTitle>
+      <DialogDescription>
+        {t("components.CreateGameServer.steps.step3.description")}
+      </DialogDescription>
       <div className="my-4 space-y-2">
         <FieldGroup>
           <FieldSet>
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel htmlFor="docker-image">Docker image</FieldLabel>
+                <FieldLabel htmlFor="docker-image">
+                  {t("components.CreateGameServer.steps.step3.dockerImageSelection.title")}
+                </FieldLabel>
                 <Input id="docker-image" placeholder="nginx" required />
-                <FieldDescription>Docker image for your server</FieldDescription>
+                <FieldDescription>
+                  {t("components.CreateGameServer.steps.step3.dockerImageSelection.description")}
+                </FieldDescription>
               </Field>
               <Field>
-                <FieldLabel htmlFor="image-tag">Image tag</FieldLabel>
+                <FieldLabel htmlFor="image-tag">
+                  {t("components.CreateGameServer.steps.step3.imageTagSelection.title")}
+                </FieldLabel>
                 <Input id="image-tag" placeholder="latest" required />
-                <FieldDescription>Tag for the Docker image</FieldDescription>
+                <FieldDescription>
+                  {t("components.CreateGameServer.steps.step3.imageTagSelection.description")}
+                </FieldDescription>
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel htmlFor="port-selection">Port</FieldLabel>
+                <FieldLabel htmlFor="port-selection">
+                  {t("components.CreateGameServer.steps.step3.portSelection.title")}
+                </FieldLabel>
                 <Input id="port-selection" placeholder="4433" required />
-                <FieldDescription>Port your Server will run on</FieldDescription>
+                <FieldDescription>
+                  {t("components.CreateGameServer.steps.step3.portSelection.description")}
+                </FieldDescription>
               </Field>
             </div>
             <FieldKeyValueInput
               placeHolderKeyInput="KEY"
               placeHolderValueInput="VALUE"
               separator="="
-              fieldLabel="Environment Variable"
-              fieldDescription="Environment variables for your Server"
+              fieldLabel={t(
+                "components.CreateGameServer.steps.step3.environmentVariablesSelection.title",
+              )}
+              fieldDescription={t(
+                "components.CreateGameServer.steps.step3.environmentVariablesSelection.description",
+              )}
               values={envVars}
               setKeyValue={setEnvVars}
             />
             <Field>
-              <FieldLabel htmlFor="execution-command">Execution Command</FieldLabel>
+              <FieldLabel htmlFor="execution-command">
+                {t("components.CreateGameServer.steps.step3.executionCommandSelection.title")}
+              </FieldLabel>
               <Input id="execution-command" placeholder="./start.sh" required />
-              <FieldDescription>Command to start your server</FieldDescription>
+              <FieldDescription>
+                {t("components.CreateGameServer.steps.step3.executionCommandSelection.description")}
+              </FieldDescription>
             </Field>
             <FieldKeyValueInput
               placeHolderKeyInput="Host Path"
               placeHolderValueInput="Container Path"
               separator=":"
-              fieldLabel="Volume Mount"
-              fieldDescription="Volume mounts for your server"
+              fieldLabel={t("components.CreateGameServer.steps.step3.hostPathSelection.title")}
+              fieldDescription={t(
+                "components.CreateGameServer.steps.step3.hostPathSelection.description",
+              )}
               values={volumeMounts}
               setKeyValue={setVolumeMounts}
             />

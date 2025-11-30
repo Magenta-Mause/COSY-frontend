@@ -12,6 +12,63 @@ const translation: i18nLanguage = {
     noConsequence: "You didn't even have any clicks to repay your wrongdoings!",
     earnMoreClicks: "Earn some more clicks",
   },
+  components: {
+    CreateGameServer: {
+      openButton: "Create Game Server",
+      backButton: "Back",
+      nextStepButton: "Next Step",
+      createServerButton: "Create Server",
+      steps: {
+        step1: {
+          title: "Create Game Server Step 1: Choose Game",
+          gameSelection: {
+            title: "Choose a game for your server",
+            description: "Select a game to host on your server.",
+          },
+        },
+        step2: {
+          title: "Create Game Server Step 2: Choose Template and Name",
+          description: "Choose a template and a name for your server.",
+          templateSelection: {
+            title: "Template",
+            description: "Select a template for your server",
+          },
+          serverNameSelection: {
+            title: "Server Name",
+            description: "Name your server",
+          },
+        },
+        step3: {
+          title: "Create Game Server Step 3: Configure your Server",
+          description: "Here you can configure your server.",
+          dockerImageSelection: {
+            title: "Docker image",
+            description: "Docker image for your server",
+          },
+          imageTagSelection: {
+            title: "Image tag",
+            description: "Tag for the Docker image",
+          },
+          portSelection: {
+            title: "Port",
+            description: "Port your Server will run on",
+          },
+          environmentVariablesSelection: {
+            title: "Environment Variable",
+            description: "Environment variables for your Server",
+          },
+          executionCommandSelection: {
+            title: "Execution Command",
+            description: "Command to start your server",
+          },
+          hostPathSelection: {
+            title: "Volume Mount",
+            description: "Volume mounts for your server",
+          },
+        },
+      },
+    },
+  },
 };
 
 export default translation;
