@@ -4,11 +4,13 @@ import stores from "@/stores";
 import AuthProvider from "@components/technical/Providers/AuthProvider/AuthProvider.tsx";
 
 const Providers = (props: { children: ReactNode }) => {
-  return <Provider store={stores}>
-    <AuthProvider>
-      {props.children}
-    </AuthProvider>
-  </Provider>
+    return <Provider store={stores}>
+        <QueryClientProvider client={stores.queryClient}>
+            <AuthProvider>
+                {props.children}
+            </AuthProvider>
+        </QueryClientProvider>
+    </Provider>
 }
 
 export default Providers;
