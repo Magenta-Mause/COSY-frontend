@@ -9,20 +9,18 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "@/routeTree.gen";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@/index.css";
+import Providers from "@components/technical/Providers/Providers.tsx";
 import "@/i18n/i18n";
 
 const router = createRouter({ routeTree });
-const queryClient = new QueryClient()
-
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <Providers>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </Providers>
   </StrictMode>
 );
 
