@@ -10,7 +10,7 @@ const ConstructionPlaceHouse = (props: { className?: string; style?: CSSProperti
   return (
     <a
       className={cn(
-        "block w-[30%] h-auto overflow-visible translate-x-[-9.3vw] translate-y-[0.1vw] aspect-video text-xs relative select-none",
+        "block w-[28%] h-auto overflow-visible translate-x-[-7.8vw] translate-y-[2vw] aspect-[2.18] text-xs relative select-none",
         props.className,
       )}
       aria-label={`Create a new Game Server Configuration`}
