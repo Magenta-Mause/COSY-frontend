@@ -36,7 +36,7 @@ export const customInstance = <T>(
     ...config,
     ...options,
     cancelToken: source.token,
-    timeout: 2500,
+    timeout: options?.timeout ?? 4000,
   }).then((response) => response as T);
 
   // @ts-expect-error

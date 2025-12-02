@@ -8,9 +8,8 @@ import { type ReactNode, useState } from "react";
 
 export interface RightClickAction {
   label: string;
-  onClick?: () => Promise<void> | void; // Make onClick optional
-  children?: RightClickAction[];
-  render?: ReactNode; // Add render prop
+  onClick?: () => Promise<void> | void;
+  render?: ReactNode;
 }
 
 interface RightClickMenuProps {
@@ -27,7 +26,6 @@ const RightClickMenu = (props: RightClickMenuProps) => {
       cancelable: true,
     });
 
-    // Dispatch the event on the desired element, e.g., the document or a specific element
     document.dispatchEvent(escapeEvent);
   };
   const [loading, setLoading] = useState(false);
@@ -43,12 +41,9 @@ const RightClickMenu = (props: RightClickMenuProps) => {
     <ContextMenu>
       <ContextMenuTrigger asChild>{props.children}</ContextMenuTrigger>
       <ContextMenuContent>
-        {props.actions.map((action, index) => (
+        {props.actions.map((action, index) =>
           action.render ? (
-            // If a render prop is provided, render it directly
-            <div key={action.label || index}>
-              {action.render}
-            </div>
+            <div key={action.label || index}>{action.render}</div>
           ) : (
             <ContextMenuItem
               key={action.label}
@@ -63,8 +58,8 @@ const RightClickMenu = (props: RightClickMenuProps) => {
             >
               {action.label}
             </ContextMenuItem>
-          )
-        ))}
+          ),
+        )}
       </ContextMenuContent>
     </ContextMenu>
   );

@@ -51,15 +51,12 @@ export function DeleteGameServerAlertDialog({
           <AlertDialogDescription>{t("deleteGameServerDialog.description")}</AlertDialogDescription>
           <div className="grid gap-4 py-4">
             <div className="flex flex-col items-start gap-4">
-              <Label htmlFor="serverName" className="text-right">
-                {t("deleteGameServerDialog.inputLabel")}
-              </Label>
+              <Label htmlFor="serverName">{t("deleteGameServerDialog.inputLabel")}</Label>
               <Input
                 id="serverName"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder={serverName}
-                className="col-span-3"
               />
             </div>
           </div>
