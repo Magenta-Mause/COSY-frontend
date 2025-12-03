@@ -1,4 +1,4 @@
-import GameServerConfigurationHouseAligner from "@components/display/GameServerConfiguration/GameServerConfigurationHouseAligner/GameServerConfigurationHouseAligner.tsx";
+import GameServerHouseAligner from "@components/display/GameServer/GameServerHouseAligner/GameServerHouseAligner.tsx";
 import type { GameServerConfigurationEntity } from "@/api/generated/model";
 
 const GameServerDisplay = (props: {
@@ -6,7 +6,7 @@ const GameServerDisplay = (props: {
 }) => {
   return (
     <div className={"w-full h-full"}>
-      <GameServerConfigurationHouseAligner gameServers={props.gameServerConfigurations} />
+      <GameServerHouseAligner gameServers={props.gameServerConfigurations} />
     </div>
   );
 };

@@ -18,7 +18,7 @@ export type i18nLanguage = {
   deleteGameServerDialog: {
     title: ContainsVariable<"serverName">;
     description: string;
-    inputLabel: ContainsVariable<"serverName">;
+    inputLabel: string;
     cancel: string;
     confirm: string;
   };

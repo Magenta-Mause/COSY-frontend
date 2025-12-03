@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading.tsx";
 
-const GlobalRightClickHandler = (props: { children: ReactNode }) => {
+const GameServerOverviewPageRightClickHandler = (props: { children: ReactNode }) => {
   const { t } = useTranslation();
   const { loadGameServers } = useDataLoading();
 
@@ -32,4 +32,4 @@ const GlobalRightClickHandler = (props: { children: ReactNode }) => {
   return <RightClickMenu actions={actions}>{props.children}</RightClickMenu>;
 };
 
-export default GlobalRightClickHandler;
+export default GameServerOverviewPageRightClickHandler;

@@ -1,13 +1,13 @@
 import RightClickMenu, {
   type RightClickAction,
 } from "@components/display/configurations/RightClickMenu/RightClickMenu.tsx";
-import GameSign from "@components/display/GameServerConfiguration/GameSign/GameSign.tsx";
 import { Link } from "@tanstack/react-router";
 import type { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import constructionImage from "@/assets/ai-generated/main-page/construction.png";
 import { cn } from "@/lib/utils.ts";
+import GameSign from "../GameSign/GameSign";
 
 const ConstructionPlaceHouse = (props: { className?: string; style?: CSSProperties }) => {
   const { t } = useTranslation();

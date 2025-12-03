@@ -21,7 +21,7 @@ const translation: i18nLanguage = {
     title: "Are you absolutely sure you want to delete {{serverName}}?",
     description:
       "This action cannot be undone. This will permanently delete your Game Server Configuration and remove its data from the server.",
-    inputLabel: "Enter the name of the game server to be sure: ({{serverName}})",
+    inputLabel: "Enter the name of the game server to be sure:",
     cancel: "Cancel",
     confirm: "Delete",
   },

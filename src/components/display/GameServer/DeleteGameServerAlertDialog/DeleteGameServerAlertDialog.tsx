@@ -73,9 +73,13 @@ export function DeleteGameServerAlertDialog({
           <DialogDescription>{t("deleteGameServerDialog.description")}</DialogDescription>
           <div className="grid gap-4 py-4">
             <div className="flex flex-col items-start gap-4">
-              <Label htmlFor="serverName">
-                {t("deleteGameServerDialog.inputLabel", { serverName })}
-              </Label>
+              <div>
+                <Label htmlFor="serverName">{t("deleteGameServerDialog.inputLabel")}</Label>
+                <br />
+                <span className={"text-sm text-muted-foreground"}>
+                  (<span className={"select-all"}>{serverName}</span>)
+                </span>
+              </div>
               <Input
                 id="serverName"
                 value={inputValue}

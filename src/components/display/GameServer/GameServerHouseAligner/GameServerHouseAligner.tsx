@@ -1,6 +1,6 @@
-import ConstructionPlaceHouse from "@components/display/GameServerConfiguration/ConstructionPlaceHouse/ConstructionPlaceHouse.tsx";
-import GameServerConfigurationHouse from "@components/display/GameServerConfiguration/GameServerConfigurationHouse/GameServerConfigurationHouse.tsx";
-import calculateCoordinate from "@components/display/GameServerConfiguration/GameServerConfigurationHouseAligner/calculateCoordinate.ts";
+import ConstructionPlaceHouse from "@components/display/GameServer/ConstructionPlaceHouse/ConstructionPlaceHouse.tsx";
+import GameServerHouse from "@components/display/GameServer/GameServerHouse/GameServerHouse.tsx";
+import calculateCoordinate from "@components/display/GameServer/GameServerHouseAligner/calculateCoordinate.ts";
 import type { GameServerConfigurationEntity } from "@/api/generated/model";
 
 const GameServerHouseAligner = (props: { gameServers: GameServerConfigurationEntity[] }) => {
@@ -17,11 +17,7 @@ const GameServerHouseAligner = (props: { gameServers: GameServerConfigurationEnt
   return (
     <div className="w-full h-full relative">
       {props.gameServers.map((gameServer, index) => (
-        <GameServerConfigurationHouse
-          key={gameServer.uuid}
-          gameServer={gameServer}
-          style={getStyle(index)}
-        />
+        <GameServerHouse key={gameServer.uuid} gameServer={gameServer} style={getStyle(index)} />
       ))}
       <ConstructionPlaceHouse style={getStyle(props.gameServers.length)} />
     </div>
