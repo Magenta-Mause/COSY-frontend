@@ -62,14 +62,12 @@ export default function FieldKeyValueInput({
         <Input
           id="key-value-input-key"
           placeholder={placeHolderKeyInput}
-          required
           value={inputKey}
           onChange={(e) => setInputKey(e.target.value)}
         />
         <Input
           id="key-value-input-value"
           placeholder={placeHolderValueInput}
-          required
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
