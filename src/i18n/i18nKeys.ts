@@ -26,6 +26,16 @@ export type i18nLanguage = {
     createNewGameServer: string;
     gameServer: ContainsVariable<"serverName">;
   };
+  signIn: {
+    signIn: string;
+    desc: string;
+    username: string;
+    password: string;
+    resetPassword: string;
+    question: string;
+    continueMeansAccept: string;
+    legal: string;
+  };
   consequence: ContainsVariable<"counter">; // example
 };
 

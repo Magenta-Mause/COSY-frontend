@@ -29,6 +29,16 @@ const translation: i18nLanguage = {
     createNewGameServer: "Erstelle eine neue Gameserver-Konfiguration",
     gameServer: "Gameserver-Konfiguration: {{serverName}}",
   },
+  signIn: {
+    signIn: "Anmelden",
+    desc: "C.O.S.Y. - Cost Optimized Server Yard",
+    username: "Benutzername",
+    password: "Passwort",
+    resetPassword: "Passwort vergessen?",
+    question: "Du bist nicht angemeldet",
+    continueMeansAccept: "Durch die Anmeldung akzeptieren Sie unsere",
+    legal: "Datenschutzerklärung",
+  },
   consequence: "asd{{counter}}ajskod",
 };
 
