@@ -12,7 +12,6 @@ import { useForm } from "@tanstack/react-form";
 import type { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import * as z from "zod";
-import { FORM_ID, type PartialCreateServerSettings } from "../CreateGameServerModal";
 
 const formSchema = z.object({
   template: z.string().min(1, "Please select a template."),

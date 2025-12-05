@@ -1,22 +1,25 @@
-import { Button } from "@components/ui/button";
-import { DialogContent, DialogFooter } from "@components/ui/dialog";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { Button } from "@components/ui/button.tsx";
+import { DialogContent, DialogFooter } from "@components/ui/dialog.tsx";
+import { createContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Step1 from "./CreationSteps/Step1";
 import Step2 from "./CreationSteps/Step2";
-import Step3 from "./CreationSteps/Step3";
 
-export const FORM_ID = "create-game-server-form";
-
-interface Props {
-  setModalOpen: Dispatch<SetStateAction<boolean>>;
+export interface GameServerCreationContext {
+  gameServerState: Partial<GameServerCreationProps>;
+  setGameServerState: (
+    gameStateKey: keyof GameServerCreationProps,
+  ) => (value: GameServerCreationProps[keyof GameServerCreationProps]) => void;
+  setCurrentPageValid: (isValid: boolean) => void;
 }
 
-function createStepKey(step: number) {
-  return `CreateGameServerModalStep${step + 1}`;
-}
+export const GameServerCreationContext = createContext<GameServerCreationContext>({
+  gameServerState: {},
+  setGameServerState: () => () => {},
+  setCurrentPageValid: () => {},
+});
 
-interface CreateServerSettings {
+export interface GameServerCreationProps {
   gameUuid: string;
   serverName: string;
   template: string;
@@ -28,76 +31,69 @@ interface CreateServerSettings {
   volumeMounts?: Array<{ hostPath: string; containerPath: string }>;
 }
 
-export interface PartialCreateServerSettings extends Partial<CreateServerSettings> {}
+const PAGES = [<Step1 key="step1" />, <Step1 key="step2" />, <Step1 key="step3" />];
 
-export default function CreateGameServerModal({ setModalOpen }: Props) {
+const CreateGameServerModal = () => {
+  const [gameServerState, setGameServerInternalState] = useState<Partial<GameServerCreationProps>>(
+    {},
+  );
+  const [isPageValid, setPageValid] = useState<{ [key: number]: boolean }>({});
+  const [currentPage, setCurrentPage] = useState(0);
+  const isLastPage = currentPage === PAGES.length - 1;
   const { t } = useTranslation();
 
-  const [createServerSettings, setCreateServerSettings] = useState<PartialCreateServerSettings>({});
-  const [validForNextStep, setValidForNextStep] = useState(false);
-  const [step, setStep] = useState(0);
-  const CREATION_STEPS = [
-    <Step1
-      key={createStepKey(0)}
-      serverSettings={createServerSettings}
-      setCreateServerSettings={setCreateServerSettings}
-      setValidForNextStep={setValidForNextStep}
-    />,
-    <Step2
-      key={createStepKey(1)}
-      serverSettings={createServerSettings}
-      setCreateServerSettings={setCreateServerSettings}
-      setValidForNextStep={setValidForNextStep}
-    />,
-    <Step3
-      key={createStepKey(2)}
-      serverSettings={createServerSettings}
-      setCreateServerSettings={setCreateServerSettings}
-      setValidForNextStep={setValidForNextStep}
-    />,
-  ];
-
-  const [isLastStep, setIsLastStep] = useState(false);
-  useEffect(() => {
-    setIsLastStep(step === CREATION_STEPS.length - 1);
-  }, [step, CREATION_STEPS.length]);
-
-  const handleNextStep = () => {
-    if (!validForNextStep) return;
-
-    if (isLastStep) {
-      console.log(createServerSettings);
-      setModalOpen(false);
+  const handleNextPage = () => {
+    if (isLastPage) {
+      console.log("Created:", gameServerState);
+      return;
     }
 
-    console.log(createServerSettings);
-
-    setValidForNextStep(false);
-    setStep((step + 1) % CREATION_STEPS.length);
+    setCurrentPage((currentPage) => currentPage + 1);
   };
+
+  const setCurrentPageValid = (isValid: boolean) => {
+    setPageValid((prev) => ({ ...prev, [currentPage]: isValid }));
+  };
+  const setGameServerState: GameServerCreationContext["setGameServerState"] =
+    (gameStateKey) => (value) =>
+      setGameServerInternalState({ ...gameServerState, [gameStateKey]: value });
 
   return (
     <DialogContent className="sm:max-w-[600px]">
-      {CREATION_STEPS[step]}
-      <DialogFooter>
-        <Button variant="outline" onClick={() => setStep(step - 1)} disabled={step === 0}>
-          {t("components.CreateGameServer.backButton")}
-        </Button>
-        <Button
-          type="submit"
-          onClick={handleNextStep}
-          form={FORM_ID}
-          className={
-            isLastStep
-              ? "bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500"
-              : ""
-          }
-        >
-          {isLastStep
-            ? t("components.CreateGameServer.createServerButton")
-            : t("components.CreateGameServer.nextStepButton")}
-        </Button>
-      </DialogFooter>
+      <GameServerCreationContext.Provider
+        value={{
+          setGameServerState,
+          gameServerState,
+          setCurrentPageValid,
+        }}
+      >
+        {PAGES[currentPage]}
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
+            disabled={currentPage === 0}
+          >
+            {t("components.CreateGameServer.backButton")}
+          </Button>
+          <Button
+            type="button"
+            onClick={handleNextPage}
+            className={
+              isLastPage
+                ? "bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500"
+                : ""
+            }
+            disabled={!isPageValid[currentPage]}
+          >
+            {isLastPage
+              ? t("components.CreateGameServer.createServerButton")
+              : t("components.CreateGameServer.nextStepButton")}
+          </Button>
+        </DialogFooter>
+      </GameServerCreationContext.Provider>
     </DialogContent>
   );
-}
+};
+
+export default CreateGameServerModal;
