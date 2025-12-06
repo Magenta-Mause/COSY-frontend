@@ -1,49 +1,62 @@
 import {
-    GameServerCreationContext,
-    type GameServerCreationProps,
+  GameServerCreationContext,
+  type GameServerCreationProps,
 } from "@components/CreateGameServer/CreateGameServerModal.tsx";
-import {GameServerCreationPageContext} from "@components/CreateGameServer/GenericGameServerCreationPage.tsx";
-import {FieldError} from "@components/ui/field";
-import {Input} from "@components/ui/input.tsx";
-import {useCallback, useContext, useEffect, useRef, useState} from "react";
-import type {ZodType} from "zod";
+import { GameServerCreationPageContext } from "@components/CreateGameServer/GenericGameServerCreationPage.tsx";
+import { Input } from "@components/ui/input.tsx";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { useCallback, useContext, useEffect } from "react";
+import type { ZodType } from "zod";
+
+export enum InputType {
+  TEXT = "text",
+  NUMBER = "number",
+}
 
 const GenericGameServerCreationInputField = (props: {
-    attribute: keyof GameServerCreationProps;
-    validator: ZodType;
-    placeholder: string;
-    label: string;
-    errorLabel?: string;
+  attribute: keyof GameServerCreationProps;
+  validator: ZodType;
+  placeholder: string;
+  label?: string;
+  description?: string;
+  type?: InputType;
 }) => {
-    const {setGameServerState} = useContext(GameServerCreationContext);
-    const {setAttributeTouched, setAttributeValid} = useContext(GameServerCreationPageContext);
-    const [isValid, setIsValid] = useState(false);
+  const { setGameServerState } = useContext(GameServerCreationContext);
+  const { setAttributeTouched, setAttributeValid } = useContext(GameServerCreationPageContext);
 
-    useEffect(() => {
-        setAttributeTouched(props.attribute, false);
-        console.log("R")
-    }, [props.attribute, setAttributeTouched]);
+  useEffect(() => {
+    setAttributeTouched(props.attribute, false);
+  }, [props.attribute, setAttributeTouched]);
 
-    const changeCallback = useCallback((value: string) => {
-        const parsed = props.validator.safeParse(value).success;
-        setIsValid(parsed);
+  const changeCallback = useCallback(
+    (value: string) => {
+      const preProcessedValue = props.type === InputType.NUMBER ? Number(value) : value;
 
-        setGameServerState(props.attribute)(value);
-        setAttributeValid(props.attribute, parsed);
-        setAttributeTouched(props.attribute, true);
-    }, [props.attribute, props.validator.safeParse, setAttributeTouched, setAttributeValid, setGameServerState]);
+      setGameServerState(props.attribute)(preProcessedValue);
+      setAttributeValid(props.attribute, props.validator.safeParse(preProcessedValue).success);
+      setAttributeTouched(props.attribute, true);
+    },
+    [
+      props.attribute,
+      props.validator.safeParse,
+      setAttributeTouched,
+      setAttributeValid,
+      setGameServerState,
+      props.type,
+    ],
+  );
 
-    return (
-        <>
-            <label htmlFor={props.attribute}>{props.label}</label>
-            <Input
-                placeholder={props.placeholder}
-                onChange={(e) => changeCallback(e.target.value)}
-                id={props.attribute}
-            />
-            {props.errorLabel && !isValid && <FieldError errors={[{message: props.errorLabel}]}/>}
-        </>
-    );
+  return (
+    <div>
+      {props.label && <label htmlFor={props.attribute}>{props.label}</label>}
+      <Input
+        placeholder={props.placeholder}
+        onChange={(e) => changeCallback(e.target.value)}
+        id={props.attribute}
+      />
+      {props.description && <DialogDescription>{props.description}</DialogDescription>}
+    </div>
+  );
 };
 
 export default GenericGameServerCreationInputField;

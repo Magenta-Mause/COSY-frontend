@@ -1,220 +1,87 @@
-import FieldKeyValueInput from "@components/FieldKeyValueInput/FieldKeyValueInput";
+import KeyValueInput from "@components/CreateGameServer/KeyValueInput";
 import { DialogDescription, DialogTitle } from "@components/ui/dialog";
-import { Input } from "@components/ui/input";
-import { useForm } from "@tanstack/react-form";
-import { type Dispatch, type SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as z from "zod";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
-import { FORM_ID, type PartialCreateServerSettings } from "../CreateGameServerModal";
 
-const formSchema = z.object({
-  dockerImage: z.string().min(1, "Please enter a Docker image."),
-  imageTag: z.string().min(1, "Please enter an image tag."),
-  port: z.number().min(1, "Please enter a valid port number."),
-  executionCommand: z.string().min(1, "Please enter an execution command."),
-});
+import GenericGameServerCreationInputField, {
+  InputType,
+} from "../GenericGameServerCreationInputField";
+import GenericGameServerCreationPage from "../GenericGameServerCreationPage";
 
-interface Props {
-  serverSettings: PartialCreateServerSettings;
-  setCreateServerSettings: Dispatch<SetStateAction<PartialCreateServerSettings>>;
-  setValidForNextStep: Dispatch<SetStateAction<boolean>>;
-}
-
-export default function Step3({
-  serverSettings,
-  setCreateServerSettings,
-  setValidForNextStep,
-}: Props) {
+export default function Step3() {
   const { t } = useTranslation();
-  const [envVars, setEnvVars] = useState<Array<{ key: string; value: string }>>([]);
-  const [volumeMounts, setVolumeMounts] = useState<Array<{ key: string; value: string }>>([]);
-
-  const form = useForm({
-    defaultValues: {
-      dockerImage: serverSettings.dockerImageName ?? "",
-      imageTag: serverSettings.dockerImageTag ?? "",
-      port: serverSettings.port ?? 0,
-      executionCommand: serverSettings.executionCommand ?? "",
-    },
-    validators: {
-      onSubmit: formSchema,
-    },
-    onSubmit: async ({ value }) => {
-      setCreateServerSettings((prev) => ({
-        ...prev,
-        dockerImageName: value.dockerImage,
-        dockerImageTag: value.imageTag,
-        port: Number(value.port),
-        executionCommand: value.executionCommand,
-      }));
-      setValidForNextStep(true);
-    },
-  });
 
   return (
-    <div className="w-full max-w-md">
+    <GenericGameServerCreationPage>
       <DialogTitle>{t("components.CreateGameServer.steps.step3.title")}</DialogTitle>
       <DialogDescription>
         {t("components.CreateGameServer.steps.step3.description")}
       </DialogDescription>
-      <div className="my-4 space-y-2">
-        <form
-          id={FORM_ID}
-          onSubmit={(e) => {
-            e.preventDefault();
-            form.handleSubmit();
-          }}
-        >
-          <FieldGroup>
-            <FieldSet>
-              <div className="grid grid-cols-2 gap-4">
-                <form.Field name="dockerImage">
-                  {(field) => {
-                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {t("components.CreateGameServer.steps.step3.dockerImageSelection.title")}
-                        </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="nginx"
-                        />
-                        <FieldDescription>
-                          {t(
-                            "components.CreateGameServer.steps.step3.dockerImageSelection.description",
-                          )}
-                        </FieldDescription>
-                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-                <form.Field name="imageTag">
-                  {(field) => {
-                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {t("components.CreateGameServer.steps.step3.imageTagSelection.title")}
-                        </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          placeholder="latest"
-                        />
-                        <FieldDescription>
-                          {t(
-                            "components.CreateGameServer.steps.step3.imageTagSelection.description",
-                          )}
-                        </FieldDescription>
-                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <form.Field name="port">
-                  {(field) => {
-                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field>
-                        <FieldLabel htmlFor={field.name}>
-                          {t("components.CreateGameServer.steps.step3.portSelection.title")}
-                        </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(Number(e.target.value))}
-                          aria-invalid={isInvalid}
-                          placeholder="4433"
-                        />
-                        <FieldDescription>
-                          {t("components.CreateGameServer.steps.step3.portSelection.description")}
-                        </FieldDescription>
-                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-              </div>
-              <FieldKeyValueInput
-                placeHolderKeyInput="KEY"
-                placeHolderValueInput="VALUE"
-                separator="="
-                fieldLabel={t(
-                  "components.CreateGameServer.steps.step3.environmentVariablesSelection.title",
-                )}
-                fieldDescription={t(
-                  "components.CreateGameServer.steps.step3.environmentVariablesSelection.description",
-                )}
-                values={envVars}
-                setKeyValue={setEnvVars}
-              />
-              <form.Field name="executionCommand">
-                {(field) => {
-                  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field>
-                      <FieldLabel htmlFor={field.name}>
-                        {t(
-                          "components.CreateGameServer.steps.step3.executionCommandSelection.title",
-                        )}
-                      </FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        aria-invalid={isInvalid}
-                        placeholder="./start.sh"
-                      />
-                      <FieldDescription>
-                        {t(
-                          "components.CreateGameServer.steps.step3.executionCommandSelection.description",
-                        )}
-                      </FieldDescription>
-                      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                    </Field>
-                  );
-                }}
-              </form.Field>
-              <FieldKeyValueInput
-                placeHolderKeyInput="Host Path"
-                placeHolderValueInput="Container Path"
-                separator=":"
-                fieldLabel={t("components.CreateGameServer.steps.step3.hostPathSelection.title")}
-                fieldDescription={t(
-                  "components.CreateGameServer.steps.step3.hostPathSelection.description",
-                )}
-                values={volumeMounts}
-                setKeyValue={setVolumeMounts}
-              />
-            </FieldSet>
-          </FieldGroup>
-        </form>
+
+      <div className="grid grid-cols-2 gap-4">
+        <GenericGameServerCreationInputField
+          attribute="dockerImageName"
+          validator={z.string().min(1)}
+          placeholder="nginx"
+          label={t("components.CreateGameServer.steps.step3.dockerImageSelection.title")}
+          description={t(
+            "components.CreateGameServer.steps.step3.dockerImageSelection.description",
+          )}
+        />
+
+        <GenericGameServerCreationInputField
+          attribute="dockerImageTag"
+          validator={z.string().min(1)}
+          placeholder="latest"
+          label={t("components.CreateGameServer.steps.step3.imageTagSelection.title")}
+          description={t("components.CreateGameServer.steps.step3.imageTagSelection.description")}
+        />
       </div>
-    </div>
+
+      <GenericGameServerCreationInputField
+        attribute="port"
+        validator={z.number().min(1).max(65535)}
+        placeholder="4433"
+        label={t("components.CreateGameServer.steps.step3.portSelection.title")}
+        description={t("components.CreateGameServer.steps.step3.portSelection.description")}
+        type={InputType.NUMBER}
+      />
+
+      <KeyValueInput
+        attribute="environmentVariables"
+        fieldLabel={t(
+          "components.CreateGameServer.steps.step3.environmentVariablesSelection.title",
+        )}
+        fieldDescription={t(
+          "components.CreateGameServer.steps.step3.environmentVariablesSelection.description",
+        )}
+        placeHolderKeyInput="KEY"
+        placeHolderValueInput="VALUE"
+        keyValidator={z.string().min(1)}
+        valueValidator={z.string().min(1)}
+      />
+
+      <GenericGameServerCreationInputField
+        attribute="executionCommand"
+        validator={z.string().min(1)}
+        placeholder="./start.sh"
+        label={t("components.CreateGameServer.steps.step3.executionCommandSelection.title")}
+        description={t(
+          "components.CreateGameServer.steps.step3.executionCommandSelection.description",
+        )}
+      />
+
+      <KeyValueInput
+        attribute="volumeMounts"
+        fieldLabel={t("components.CreateGameServer.steps.step3.hostPathSelection.title")}
+        fieldDescription={t(
+          "components.CreateGameServer.steps.step3.hostPathSelection.description",
+        )}
+        placeHolderKeyInput="Host Path"
+        placeHolderValueInput="Container Path"
+        keyValidator={z.string().min(1)}
+        valueValidator={z.string().min(1)}
+      />
+    </GenericGameServerCreationPage>
   );
 }
