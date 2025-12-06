@@ -111,7 +111,7 @@ export function InviteRedemptionModal({inviteToken, onClose}: InviteRedemptionMo
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 py-2">
-            {inviteData?.invited_by && (
+            {inviteData?.invite_by_username && (
               <p className="text-sm text-muted-foreground text-center mb-4">
                 {t("inviteRedemption.invitedBy", {username: inviteData.invite_by_username})}
               </p>
