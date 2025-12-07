@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from "@components/ui/dialog";
 import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
 import CreateGameServerModal from "./CreateGameServerModal";
 
-export default function createGameServer() {
+export default function CreateGameServer() {
   const { t } = useTranslationPrefix("components.CreateGameServer");
 
   return (
