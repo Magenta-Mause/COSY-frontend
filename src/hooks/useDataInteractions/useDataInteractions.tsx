@@ -1,5 +1,4 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import {
@@ -9,21 +8,22 @@ import {
   useDeleteGameServerById,
 } from "@/api/generated/backend-api.ts";
 import { gameServerSliceActions } from "@/stores/slices/gameServerSlice.ts";
+import useTranslationPrefix from "../useTranslationPrefix/useTranslationPrefix";
 
 const useDataInteractions = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { t } = useTranslation();
+  const { t } = useTranslationPrefix("toasts");
 
   const { mutateAsync: deleteGameServerById } = useDeleteGameServerById({
     mutation: {
       onSuccess: (_data, variables) => {
         dispatch(gameServerSliceActions.removeGameServerConfiguration(variables.uuid));
-        toast.success(t("toasts.deleteGameServerSuccess"));
+        toast.success(t("deleteGameServerSuccess"));
       },
       // If the mutation fails, show an error toast
       onError: (err) => {
-        toast.error(t("toasts.deleteGameServerError"));
+        toast.error(t("deleteGameServerError"));
         // rethrow error to allow for individual error handling
         throw err;
       },
@@ -43,10 +43,10 @@ const useDataInteractions = () => {
     mutation: {
       onSuccess: (data) => {
         dispatch(gameServerSliceActions.addGameServerConfiguration(data));
-        toast.success(t("toasts.createGameServerSuccess"));
+        toast.success(t("createGameServerSuccess"));
       },
       onError: (err) => {
-        toast.error(t("toasts.createGameServerError"));
+        toast.error(t("createGameServerError"));
         throw err;
       },
     },

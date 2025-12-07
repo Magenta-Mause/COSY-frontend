@@ -1,11 +1,11 @@
 import GenericGameServerCreationInputField from "@components/CreateGameServer/GenericGameServerCreationInputField.tsx";
 import GenericGameServerCreationPage from "@components/CreateGameServer/GenericGameServerCreationPage.tsx";
 import { DialogTitle } from "@components/ui/dialog.tsx";
-import { useTranslation } from "react-i18next";
 import * as z from "zod";
+import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
 
 const GameServerCreationGameNamePage = () => {
-  const { t } = useTranslation(undefined, { keyPrefix: "components.CreateGameServer.steps.step1" });
+  const { t } = useTranslationPrefix("components.CreateGameServer.steps.step1");
 
   return (
     <GenericGameServerCreationPage>

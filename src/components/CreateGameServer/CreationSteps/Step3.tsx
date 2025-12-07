@@ -1,42 +1,37 @@
 import KeyValueInput from "@components/CreateGameServer/KeyValueInput";
 import { DialogDescription, DialogTitle } from "@components/ui/dialog";
-import { useTranslation } from "react-i18next";
 import * as z from "zod";
-
+import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
 import GenericGameServerCreationInputField, {
   InputType,
 } from "../GenericGameServerCreationInputField";
 import GenericGameServerCreationPage from "../GenericGameServerCreationPage";
 
 export default function Step3() {
-  const { t } = useTranslation();
+  const { t } = useTranslationPrefix("components.CreateGameServer.steps.step3");
 
   return (
     <GenericGameServerCreationPage>
-      <DialogTitle>{t("components.CreateGameServer.steps.step3.title")}</DialogTitle>
-      <DialogDescription>
-        {t("components.CreateGameServer.steps.step3.description")}
-      </DialogDescription>
+      <DialogTitle>{t("title")}</DialogTitle>
+      <DialogDescription>{t("description")}</DialogDescription>
 
       <div className="grid grid-cols-2 gap-4">
         <GenericGameServerCreationInputField
           attribute="dockerImageName"
           validator={z.string().min(1)}
           placeholder="nginx"
-          label={t("components.CreateGameServer.steps.step3.dockerImageSelection.title")}
-          description={t(
-            "components.CreateGameServer.steps.step3.dockerImageSelection.description",
-          )}
-          errorLabel={t("components.CreateGameServer.steps.step3.dockerImageSelection.errorLabel")}
+          label={t("dockerImageSelection.title")}
+          description={t("dockerImageSelection.description")}
+          errorLabel={t("dockerImageSelection.errorLabel")}
         />
 
         <GenericGameServerCreationInputField
           attribute="dockerImageTag"
           validator={z.string().min(1)}
           placeholder="latest"
-          label={t("components.CreateGameServer.steps.step3.imageTagSelection.title")}
-          description={t("components.CreateGameServer.steps.step3.imageTagSelection.description")}
-          errorLabel={t("components.CreateGameServer.steps.step3.imageTagSelection.errorLabel")}
+          label={t("imageTagSelection.title")}
+          description={t("imageTagSelection.description")}
+          errorLabel={t("imageTagSelection.errorLabel")}
         />
       </div>
 
@@ -44,23 +39,17 @@ export default function Step3() {
         attribute="port"
         validator={z.number().min(1).max(65535)}
         placeholder="4433"
-        label={t("components.CreateGameServer.steps.step3.portSelection.title")}
-        description={t("components.CreateGameServer.steps.step3.portSelection.description")}
-        errorLabel={t("components.CreateGameServer.steps.step3.portSelection.errorLabel")}
+        label={t("portSelection.title")}
+        description={t("portSelection.description")}
+        errorLabel={t("portSelection.errorLabel")}
         type={InputType.NUMBER}
       />
 
       <KeyValueInput
         attribute="environmentVariables"
-        fieldLabel={t(
-          "components.CreateGameServer.steps.step3.environmentVariablesSelection.title",
-        )}
-        fieldDescription={t(
-          "components.CreateGameServer.steps.step3.environmentVariablesSelection.description",
-        )}
-        errorLabel={t(
-          "components.CreateGameServer.steps.step3.environmentVariablesSelection.errorLabel",
-        )}
+        fieldLabel={t("environmentVariablesSelection.title")}
+        fieldDescription={t("environmentVariablesSelection.description")}
+        errorLabel={t("environmentVariablesSelection.errorLabel")}
         placeHolderKeyInput="KEY"
         placeHolderValueInput="VALUE"
         keyValidator={z.string().min(1)}
@@ -71,22 +60,16 @@ export default function Step3() {
         attribute="executionCommand"
         validator={z.string().min(1)}
         placeholder="./start.sh"
-        label={t("components.CreateGameServer.steps.step3.executionCommandSelection.title")}
-        description={t(
-          "components.CreateGameServer.steps.step3.executionCommandSelection.description",
-        )}
-        errorLabel={t(
-          "components.CreateGameServer.steps.step3.executionCommandSelection.errorLabel",
-        )}
+        label={t("executionCommandSelection.title")}
+        description={t("executionCommandSelection.description")}
+        errorLabel={t("executionCommandSelection.errorLabel")}
       />
 
       <KeyValueInput
         attribute="volumeMounts"
-        fieldLabel={t("components.CreateGameServer.steps.step3.hostPathSelection.title")}
-        fieldDescription={t(
-          "components.CreateGameServer.steps.step3.hostPathSelection.description",
-        )}
-        errorLabel={t("components.CreateGameServer.steps.step3.hostPathSelection.errorLabel")}
+        fieldLabel={t("hostPathSelection.title")}
+        fieldDescription={t("hostPathSelection.description")}
+        errorLabel={t("hostPathSelection.errorLabel")}
         placeHolderKeyInput="Host Path"
         placeHolderValueInput="Container Path"
         keyValidator={z.string().min(1)}

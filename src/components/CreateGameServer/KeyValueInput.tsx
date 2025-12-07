@@ -4,9 +4,9 @@ import { Input } from "@components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip";
 import { CircleAlertIcon } from "lucide-react";
 import { useCallback, useContext, useEffect, useState, useTransition } from "react";
-import { useTranslation } from "react-i18next";
 import type { ZodType } from "zod";
 import type { GameServerCreationDto } from "@/api/generated/model/gameServerCreationDto";
+import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
 import { GameServerCreationContext } from "./CreateGameServerModal";
 import { GameServerCreationPageContext } from "./GenericGameServerCreationPage";
 
@@ -35,7 +35,7 @@ export default function KeyValueInput({
   const { setAttributeTouched, setAttributeValid, attributesTouched } = useContext(
     GameServerCreationPageContext,
   );
-  const { t } = useTranslation();
+  const { t } = useTranslationPrefix("components.CreateGameServer");
 
   const [envVariables, setEnvVariables] = useState<
     Array<{ uuid: string; valid: boolean; key?: string; value?: string }>
@@ -134,7 +134,7 @@ export default function KeyValueInput({
           setEnvVariables((prev) => [...prev, { uuid: crypto.randomUUID(), valid: true }])
         }
       >
-        {t("components.CreateGameServer.keyValueInputAddButton")}
+        {t("keyValueInputAddButton")}
       </Button>
       <FieldDescription>{fieldDescription}</FieldDescription>
     </Field>

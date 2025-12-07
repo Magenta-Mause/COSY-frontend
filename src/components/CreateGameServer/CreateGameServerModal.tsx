@@ -1,9 +1,9 @@
 import { Button } from "@components/ui/button.tsx";
 import { DialogContent, DialogFooter } from "@components/ui/dialog.tsx";
 import { createContext, useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
 import type { GameServerCreationDto } from "@/api/generated/model";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
+import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
 import Step1 from "./CreationSteps/Step1";
 import Step2 from "./CreationSteps/Step2";
 import Step3 from "./CreationSteps/Step3";
@@ -32,7 +32,7 @@ const CreateGameServerModal = () => {
   const [isPageValid, setPageValid] = useState<{ [key: number]: boolean }>({});
   const [currentPage, setCurrentPage] = useState(0);
   const isLastPage = currentPage === PAGES.length - 1;
-  const { t } = useTranslation();
+  const { t } = useTranslationPrefix("components.CreateGameServer");
 
   const handleNextPage = () => {
     if (isLastPage) {
@@ -72,7 +72,7 @@ const CreateGameServerModal = () => {
             onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
             disabled={currentPage === 0}
           >
-            {t("components.CreateGameServer.backButton")}
+            {t("backButton")}
           </Button>
           <Button
             type="button"
@@ -84,9 +84,7 @@ const CreateGameServerModal = () => {
             }
             disabled={!isPageValid[currentPage]}
           >
-            {isLastPage
-              ? t("components.CreateGameServer.createServerButton")
-              : t("components.CreateGameServer.nextStepButton")}
+            {isLastPage ? t("createServerButton") : t("nextStepButton")}
           </Button>
         </DialogFooter>
       </GameServerCreationContext.Provider>
