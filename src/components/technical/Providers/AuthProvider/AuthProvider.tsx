@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, type ReactNode, useCallback, useEffect, useState } from "react";
 import { setAuthToken } from "@/api/axiosInstance";
-import { fetchToken } from "@/api/generated/backend-api";
+import { fetchToken, logout } from "@/api/generated/backend-api";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading.tsx";
 
 interface AuthContextType {
@@ -117,7 +117,7 @@ const AuthProvider = (props: { children: ReactNode }) => {
   const logout = useCallback(() => {
     updateAuthState(null);
     setAuthToken(null);
-    // await logoutApi();
+    logout();
   }, [updateAuthState]);
 
   const setToken = useCallback(
