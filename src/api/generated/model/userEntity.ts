@@ -5,12 +5,12 @@
  * Management API for Cosy (Cost Optimised Server Yard).
  * OpenAPI spec version: v1.0
  */
+import type { UserEntityRole } from './userEntityRole';
 
-export interface UserInviteCreationDto {
-  /**
-   * @minLength 3
-   * @maxLength 50
-   * @pattern ^[a-zA-Z0-9_-]*$
-   */
+export interface UserEntity {
+  uuid?: string;
   username?: string;
+  password?: string;
+  defaultPasswordReset?: boolean;
+  role?: UserEntityRole;
 }
