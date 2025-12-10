@@ -26,15 +26,8 @@ import type {
   UserEntityDto,
   UserInviteCreationDto,
   UserInviteDto
-  GameServerConfigurationEntity,
-  LoginDto,
-  UserCreationDto,
-  UserEntityDto,
-  UserInviteCreationDto,
-  UserInviteDto
 } from './model';
 
-import { customInstance } from '../axiosInstance';
 import { customInstance } from '../axiosInstance';
 type AwaitedInput<T> = PromiseLike<T> | T;
 
