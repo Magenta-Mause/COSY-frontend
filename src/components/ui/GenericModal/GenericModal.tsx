@@ -5,46 +5,39 @@ import { cn } from "@/lib/utils";
 import { Button } from "../button";
 
 type ModalButton = {
-  label: string;
-  onClick: () => void;
+  label?: string;
+  onClick?: () => void;
   icon?: ReactNode;
-  variant?: "default" | "destructive" | "outline" | "secondary";
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost";
   className?: string;
   disable?: boolean;
 };
 
 const GenericModal = (props: {
-  dialogTrigger?: {
-    label?: string | ReactNode; // now supports ReactNode
-    className?: string; // optional classes for trigger button
-    onClick?: () => void; // optional click handler
-  };
   header: string;
+  onOpenChange: (open: boolean) => void;
+  children: ReactNode;
+  modalTrigger?: ModalButton
   subheader?: string;
   open?: boolean;
-  onOpenChange: (open: boolean) => void;
   modalClassName?: string;
   modalContentClassName?: string;
-  children: ReactNode;
   footerButtons?: ModalButton[];
-  closeButton?: {
-    label?: string; 
-    className?: string;
-    onClick?: () => void;
-  };
+  closeButton?: ModalButton;
 }) => {
   const { t } = useTranslation();
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       
-      {props.dialogTrigger && (
+      {props.modalTrigger && (
         <DialogTrigger asChild>
           <Button
-            onClick={props.dialogTrigger.onClick}
-            className={props.dialogTrigger.className}
+            onClick={props.modalTrigger.onClick}
+            className={props.modalTrigger.className}
           >
-            {props.dialogTrigger.label || t("openModal")}
+            {props.modalTrigger.icon}
+            {props.modalTrigger.label}
           </Button>
         </DialogTrigger>
       )}
@@ -67,7 +60,7 @@ const GenericModal = (props: {
                 variant={"default"}
                 className={cn(props.closeButton.className, "h-full")}
               >
-                {props.closeButton.label || t("cancel")}
+                {props.closeButton.label || t("genericModal.cancel")}
               </Button>
             </DialogClose>
           )}

@@ -88,6 +88,9 @@ export type i18nLanguage = {
     loading: string;
     logout: string;
   };
+  genericModal: {
+    cancel: string;
+  };
 };
 
 type ContainsVariable<T extends string> = `${string}{{${T}}}${string}`;

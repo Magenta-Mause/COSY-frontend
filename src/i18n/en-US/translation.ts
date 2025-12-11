@@ -92,6 +92,9 @@ const translation: i18nLanguage = {
     loading: "Loading...",
     logout: "Logout",
   },
+  genericModal: {
+    cancel: "Cancel",
+  },
 };
 
 export default translation;

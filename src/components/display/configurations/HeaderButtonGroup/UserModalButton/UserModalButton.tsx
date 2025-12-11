@@ -1,5 +1,5 @@
 import GenericModal from "@components/ui/GenericModal/GenericModal";
-import { UserPlus, Users } from "lucide-react";
+import { ArrowLeft, UserPlus, Users } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -55,8 +55,8 @@ const UserModalButton = (props: { className?: string }) => {
         }
         return !open;
       }}
-      dialogTrigger={{
-        label: <Users className="!h-[1.5vw] p-0 !w-auto aspect-square" />,
+      modalTrigger={{
+        icon: <Users className="h-[1.5vw]! p-0 w-auto! aspect-square" />,
         className: cn("h-auto p-[.5vw] aspect-square", props.className),
       }}
       header={
@@ -94,9 +94,10 @@ const UserModalButton = (props: { className?: string }) => {
             : view === "result"
               ? [
                   {
-                    label: t("userModal.inviteBtn"),
-                    icon: <UserPlus className="w-4 h-4 mr-2" />,
-                    onClick: () => setView("invite"),
+                    label: t("userModal.backToUsers"),
+                    icon: <ArrowLeft className="w-4 h-4 mr-2" />,
+                    onClick: resetView,
+                    variant: "ghost",
                   },
                 ]
               : []
