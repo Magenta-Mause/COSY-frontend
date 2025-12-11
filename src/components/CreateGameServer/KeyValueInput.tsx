@@ -2,7 +2,7 @@ import { Button } from "@components/ui/button";
 import { Field, FieldDescription, FieldLabel } from "@components/ui/field";
 import { Input } from "@components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip";
-import { CircleAlertIcon } from "lucide-react";
+import { CircleAlertIcon, CircleX } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { v7 as uuidv7 } from "uuid";
 import type { ZodType } from "zod";
@@ -146,6 +146,10 @@ export default function KeyValueInput({
     ],
   );
 
+  const removeValueAtIndex = useCallback((index: number) => {
+    setKeyValuePair((prev) => prev.filter((_, idx) => idx !== index));
+  }, []);
+
   return (
     <Field>
       <FieldLabel htmlFor="key-value-input">{fieldLabel}</FieldLabel>
@@ -154,7 +158,7 @@ export default function KeyValueInput({
         {keyValuePair.map((keyValuePair, index) => {
           const rowError = attributesTouched[attribute] && !keyValuePair.valid;
           return (
-            <div key={keyValuePair.uuid} className="flex items-center gap-2 w-full">
+            <div key={keyValuePair.uuid} className="flex items-center gap-2 w-full h-fit">
               <Input
                 className={rowError ? "border-red-500" : ""}
                 id={`key-value-input-key-${index}`}
@@ -171,6 +175,17 @@ export default function KeyValueInput({
                 onChange={(e) => changeCallback(objectValue, index)(e.target.value)}
                 type={inputType}
               />
+              {index > 0 && (
+                <Button
+                  variant="destructive"
+                  onClick={() => removeValueAtIndex(index)}
+                  className="h-9 w-9 p-0 flex items-center justify-center"
+                  aria-label="Remove entry"
+                >
+                  <CircleX className="w-full h-full" />
+                </Button>
+              )}
+
               {rowError && (
                 <Tooltip>
                   <TooltipTrigger asChild>
