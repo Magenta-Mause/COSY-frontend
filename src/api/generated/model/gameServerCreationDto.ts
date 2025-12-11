@@ -7,7 +7,7 @@
  */
 import type { PortMapping } from './portMapping';
 import type { EnvironmentVariableConfiguration } from './environmentVariableConfiguration';
-import type { VolumeMountConfiguration } from './volumeMountConfiguration';
+import type { VolumeMountConfigurationCreationDto } from './volumeMountConfigurationCreationDto';
 
 export interface GameServerCreationDto {
   /** @minLength 1 */
@@ -20,8 +20,10 @@ export interface GameServerCreationDto {
   docker_image_name: string;
   /** @minLength 1 */
   docker_image_tag: string;
+  /** @minItems 1 */
   port_mappings: PortMapping[];
+  /** @minItems 1 */
   execution_command: string[];
   environment_variables?: EnvironmentVariableConfiguration[];
-  volume_mounts?: VolumeMountConfiguration[];
+  volume_mounts?: VolumeMountConfigurationCreationDto[];
 }

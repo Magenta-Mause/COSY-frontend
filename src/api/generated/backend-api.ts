@@ -20,8 +20,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
-  GameServerConfigurationEntity,
   GameServerCreationDto,
+  GameServerDto,
   LoginDto,
   UserCreationDto,
   UserEntityDto,
@@ -227,7 +227,7 @@ export const getAllGameServers = (
 ) => {
       
       
-      return customInstance<GameServerConfigurationEntity[]>(
+      return customInstance<GameServerDto[]>(
       {url: `/game-server-configurations`, method: 'GET', signal
     },
       options);
@@ -290,7 +290,7 @@ export const createGameServer = (
 ) => {
       
       
-      return customInstance<GameServerConfigurationEntity>(
+      return customInstance<GameServerDto>(
       {url: `/game-server-configurations`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: gameServerCreationDto, signal
@@ -710,7 +710,7 @@ export const getGameServerById = (
 ) => {
       
       
-      return customInstance<GameServerConfigurationEntity>(
+      return customInstance<GameServerDto>(
       {url: `/game-server-configurations/${uuid}`, method: 'GET', signal
     },
       options);
