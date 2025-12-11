@@ -38,14 +38,6 @@ export const InviteForm = ({
         />
         <p className="text-xs text-muted-foreground">{t("userModal.usernameDescription")}</p>
       </div>
-      <div className="flex justify-end gap-2 mt-4">
-        <Button variant="outline" size="sm" onClick={onCancel}>
-          {t("userModal.cancel")}
-        </Button>
-        <Button variant="default" size="sm" onClick={onSubmit} disabled={isCreating}>
-          {isCreating ? t("userModal.creating") : t("userModal.generateInvite")}
-        </Button>
-      </div>
     </div>
   );
 };

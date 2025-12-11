@@ -77,7 +77,29 @@ const UserModalButton = (props: { className?: string }) => {
                 onClick: () => setView("invite"),
               },
             ]
-          : []
+          : view === "invite"
+            ? [
+                {
+                  label: t("userModal.cancel"),
+                  onClick: () => setView("list"),
+                  variant: "outline",
+                },
+                {
+                  label: isCreating ? t("userModal.creating") : t("userModal.generateInvite"),
+                  onClick: handleCreateInvite,
+                  disable: isCreating,
+                  variant: "default",
+                },
+              ]
+            : view === "result"
+              ? [
+                  {
+                    label: t("userModal.inviteBtn"),
+                    icon: <UserPlus className="w-4 h-4 mr-2" />,
+                    onClick: () => setView("invite"),
+                  },
+                ]
+              : []
       }
     >
       {view === "list" && <UserList onRevoke={revokeInvite} />}
