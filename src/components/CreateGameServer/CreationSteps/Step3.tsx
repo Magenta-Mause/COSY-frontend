@@ -1,4 +1,4 @@
-import KeyValueInput from "@components/CreateGameServer/KeyValueInput";
+import KeyValueInput, { InputType } from "@components/CreateGameServer/KeyValueInput";
 import { DialogDescription, DialogTitle } from "@components/ui/dialog";
 import * as z from "zod";
 import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
@@ -43,7 +43,7 @@ export default function Step3() {
         keyValidator={z.number().min(1).max(65535)}
         valueValidator={z.number().min(1).max(65535)}
         required
-        inputType="number"
+        inputType={InputType.number}
         objectKey="instance_port"
         objectValue="container_port"
       />
@@ -57,7 +57,7 @@ export default function Step3() {
         placeHolderValueInput="VALUE"
         keyValidator={z.string().min(1)}
         valueValidator={z.string().min(1)}
-        inputType="text"
+        inputType={InputType.number}
         objectKey="key"
         objectValue="value"
       />
@@ -80,7 +80,7 @@ export default function Step3() {
         placeHolderValueInput="Container Path"
         keyValidator={z.string().min(1)}
         valueValidator={z.string().min(1)}
-        inputType="text"
+        inputType={InputType.text}
         objectKey="host_path"
         objectValue="container_path"
       />
