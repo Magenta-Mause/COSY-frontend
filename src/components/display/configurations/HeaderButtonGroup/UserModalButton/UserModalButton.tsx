@@ -1,4 +1,4 @@
-import GenericModal from "@components/ui/GenericModal/GenericModal";
+import GenericModal, { type ModalButton } from "@components/ui/GenericModal/GenericModal";
 import { ArrowLeft, UserPlus, Users } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -47,6 +47,60 @@ const UserModalButton = (props: { className?: string }) => {
     setGeneratedKey(null);
   }, []);
 
+  const header = (() => {
+    switch (view) {
+      case "list":
+        return t("userModal.title");
+      case "invite":
+        return t("userModal.inviteUserTitle");
+      case "result":
+        return t("userModal.inviteCreatedTitle");
+      default:
+        return "";
+    }
+  })();
+
+  const buttons = ((): ModalButton[] => {
+    switch (view) {
+      case "list":
+        return [
+          {
+            label: t("userModal.inviteBtn"),
+            icon: <UserPlus className="w-4 h-4 mr-2" />,
+            onClick: () => setView("invite"),
+          },
+        ];
+
+      case "invite":
+        return [
+          {
+            label: t("userModal.cancel"),
+            onClick: () => setView("list"),
+            variant: "outline",
+          },
+          {
+            label: isCreating ? t("userModal.creating") : t("userModal.generateInvite"),
+            onClick: handleCreateInvite,
+            disable: isCreating,
+            variant: "default",
+          },
+        ];
+
+      case "result":
+        return [
+          {
+            label: t("userModal.backToUsers"),
+            icon: <ArrowLeft className="w-4 h-4 mr-2" />,
+            onClick: resetView,
+            variant: "ghost",
+          },
+        ];
+
+      default:
+        return [];
+    }
+  })();
+
   return (
     <GenericModal
       onOpenChange={(open) => {
@@ -59,49 +113,8 @@ const UserModalButton = (props: { className?: string }) => {
         icon: <Users className="h-[1.5vw]! p-0 w-auto! aspect-square" />,
         className: cn("h-auto p-[.5vw] aspect-square", props.className),
       }}
-      header={
-        view === "list"
-          ? t("userModal.title")
-          : view === "invite"
-            ? t("userModal.inviteUserTitle")
-            : view === "result"
-              ? t("userModal.inviteCreatedTitle")
-              : ""
-      }
-      footerButtons={
-        view === "list"
-          ? [
-              {
-                label: t("userModal.inviteBtn"),
-                icon: <UserPlus className="w-4 h-4 mr-2" />,
-                onClick: () => setView("invite"),
-              },
-            ]
-          : view === "invite"
-            ? [
-                {
-                  label: t("userModal.cancel"),
-                  onClick: () => setView("list"),
-                  variant: "outline",
-                },
-                {
-                  label: isCreating ? t("userModal.creating") : t("userModal.generateInvite"),
-                  onClick: handleCreateInvite,
-                  disable: isCreating,
-                  variant: "default",
-                },
-              ]
-            : view === "result"
-              ? [
-                  {
-                    label: t("userModal.backToUsers"),
-                    icon: <ArrowLeft className="w-4 h-4 mr-2" />,
-                    onClick: resetView,
-                    variant: "ghost",
-                  },
-                ]
-              : []
-      }
+      header={header}
+      footerButtons={buttons}
     >
       {view === "list" && <UserList onRevoke={revokeInvite} />}
       {view === "invite" && (
