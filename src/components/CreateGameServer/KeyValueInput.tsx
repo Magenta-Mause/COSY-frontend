@@ -71,16 +71,6 @@ export default function KeyValueInput({
     [inputType],
   );
 
-  const preProcessKeyAndValue = useCallback(
-    (key: string, value: string): [string | number, string | number] => {
-      const preProcessedKey = preProcessValue(key);
-      const preProcessedValue= preProcessValue(value);
-
-      return [preProcessedKey, preProcessedValue];
-    },
-    [preProcessValue],
-  );
-
   const validateKeyValuePair = useCallback(
     (key?: string, value?: string) => {
       if (!key && !value && !required) {
@@ -89,14 +79,15 @@ export default function KeyValueInput({
         return false;
       }
 
-      const [preProcessedKey, preProcessedValue] = preProcessKeyAndValue(key, value);
+      const preProcessedKey = preProcessValue(key);
+      const preProcessedValue= preProcessValue(value);
 
       const keyValid = (key: string | number) => keyValidator.safeParse(key).success;
       const valueValid = (value: string | number) => valueValidator.safeParse(value).success;
 
       return keyValid(preProcessedKey) && valueValid(preProcessedValue);
     },
-    [keyValidator, valueValidator, required, preProcessKeyAndValue],
+    [keyValidator, valueValidator, required],
   );
 
   useEffect(() => {
@@ -104,7 +95,7 @@ export default function KeyValueInput({
       attribute,
       keyValuePairs.every((keyValuePair) => keyValuePair.valid),
     );
-  }, [attribute, keyValuePairs, setAttributeValid]);
+  }, [attribute, keyValuePairs, setAttributeValid, preProcessValue]);
 
   const changeCallback = useCallback(
     (key: string, uuid: string) => (value: string) => {
