@@ -99,8 +99,9 @@ export function DeleteGameServerAlertDialog({
           </DialogClose>
           <Button
             type="button"
+            variant={"destructive"}
             onClick={handleConfirm}
-            className={cn(buttonVariants(), "h-[50px]")}
+            className={"h-[50px]"}
             disabled={isConfirmButtonDisabled}
           >
             {t("deleteGameServerDialog.confirm")}
