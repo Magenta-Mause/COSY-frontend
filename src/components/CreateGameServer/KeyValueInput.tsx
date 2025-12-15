@@ -52,7 +52,7 @@ export default function KeyValueInput({
   );
   const { t } = useTranslationPrefix("components.CreateGameServer");
 
-  const [keyValuePair, setKeyValuePair] = useState<
+  const [keyValuePairs, setKeyValuePairs] = useState<
     Array<{
       uuid: string;
       valid: boolean;
@@ -102,15 +102,15 @@ export default function KeyValueInput({
   useEffect(() => {
     setAttributeValid(
       attribute,
-      keyValuePair.every((keyValuePair) => keyValuePair.valid),
+      keyValuePairs.every((keyValuePair) => keyValuePair.valid),
     );
-  }, [attribute, keyValuePair, setAttributeValid]);
+  }, [attribute, keyValuePairs, setAttributeValid]);
 
   const changeCallback = useCallback(
-    (key: string, index: number) => (value: string) => {
-      setKeyValuePair((prev) =>
-        prev.map((item, idx) =>
-          idx === index
+    (key: string, uuid: string) => (value: string) => {
+      setKeyValuePairs((prev) =>
+        prev.map((item) =>
+          item.uuid === uuid
             ? {
                 ...item,
                 [key]: preProcessValue(value),
@@ -124,10 +124,10 @@ export default function KeyValueInput({
       );
       setAttributeTouched(attribute, true);
       setGameServerState(attribute)(
-        keyValuePair
+        keyValuePairs
           .filter((keyValuePair) => keyValuePair.valid)
-          .map((keyValuePair, idx) =>
-            idx === index ? { ...keyValuePair, [key]: preProcessValue(value) } : keyValuePair,
+          .map((keyValuePair) =>
+            keyValuePair.uuid === uuid ? { ...keyValuePair, [key]: preProcessValue(value) } : keyValuePair,
           ) as {
           [objectKey]: string;
           [objectValue]: string;
@@ -138,7 +138,7 @@ export default function KeyValueInput({
       attribute,
       setAttributeTouched,
       setGameServerState,
-      keyValuePair,
+      keyValuePairs,
       validateKeyValuePair,
       objectKey,
       objectValue,
@@ -146,8 +146,8 @@ export default function KeyValueInput({
     ],
   );
 
-  const removeValueAtIndex = useCallback((index: number) => {
-    setKeyValuePair((prev) => prev.filter((_, idx) => idx !== index));
+  const removeValueAtIndex = useCallback((uuid: string) => {
+    setKeyValuePairs((prev) => prev.filter((pair) => pair.uuid !== uuid));
   }, []);
 
   return (
@@ -155,30 +155,30 @@ export default function KeyValueInput({
       <FieldLabel htmlFor="key-value-input">{fieldLabel}</FieldLabel>
 
       <div className="space-y-2 w-full">
-        {keyValuePair.map((keyValuePair, index) => {
+        {keyValuePairs.map((keyValuePair, index) => {
           const rowError = attributesTouched[attribute] && !keyValuePair.valid;
           return (
             <div key={keyValuePair.uuid} className="flex items-center gap-2 w-full h-fit">
               <Input
                 className={rowError ? "border-red-500" : ""}
-                id={`key-value-input-key-${index}`}
+                id={`key-value-input-key-${keyValuePair.uuid}`}
                 placeholder={placeHolderKeyInput}
                 value={(keyValuePair[objectKey] as string | undefined) || ""}
-                onChange={(e) => changeCallback(objectKey, index)(e.target.value)}
+                onChange={(e) => changeCallback(objectKey, keyValuePair.uuid)(e.target.value)}
                 type={inputType}
-              />
+              />  
               <Input
                 className={rowError ? "border-red-500" : ""}
-                id={`key-value-input-value-${index}`}
+                id={`key-value-input-value-${keyValuePair.uuid}`}
                 placeholder={placeHolderValueInput}
                 value={(keyValuePair[objectValue] as string | undefined) || ""}
-                onChange={(e) => changeCallback(objectValue, index)(e.target.value)}
+                onChange={(e) => changeCallback(objectValue, keyValuePair.uuid)(e.target.value)}
                 type={inputType}
               />
               {index > 0 && (
                 <Button
                   variant="destructive"
-                  onClick={() => removeValueAtIndex(index)}
+                  onClick={() => removeValueAtIndex(keyValuePair.uuid)}
                   className="h-9 w-9 p-0 flex items-center justify-center"
                   aria-label="Remove entry"
                 >
@@ -200,7 +200,7 @@ export default function KeyValueInput({
       </div>
       <Button
         className="ml-2"
-        onClick={() => setKeyValuePair((prev) => [...prev, { uuid: uuidv7(), valid: true }])}
+        onClick={() => setKeyValuePairs((prev) => [...prev, { uuid: uuidv7(), valid: true }])}
       >
         {t("keyValueInputAddButton")}
       </Button>
