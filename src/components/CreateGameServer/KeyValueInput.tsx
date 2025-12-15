@@ -12,9 +12,9 @@ import { GameServerCreationContext } from "./CreateGameServerModal";
 import { GameServerCreationPageContext } from "./GenericGameServerCreationPage";
 
 // All keys must be a key of HTMLInputTypeAttribute
-interface InputType {
-  text: string;
-  number: string;
+enum InputType {
+  text = "text",
+  number = "number",
 }
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
   valueValidator: ZodType;
   errorLabel: string;
   required?: boolean;
-  inputType: keyof InputType;
+  inputType: InputType;
   objectKey: string; // This is the property name for the key in the object
   objectValue: string; // This is the property name for the value in the object
 }
@@ -63,7 +63,7 @@ export default function KeyValueInput({
 
   const preProcessValue = useCallback(
     (value: string): string | number => {
-      if (inputType === "number") {
+      if (inputType === InputType.number) {
         return Number(value);
       }
       return value;
