@@ -61,7 +61,6 @@ export const UserList = ({ onRevoke }: UserListProps) => {
                     <TooltipTrigger asChild>
                       <Button
                         size="icon"
-                        withDecorations={false}
                         className="h-8 w-8 text-muted-foreground hover:text-button-secondary-default"
                         onClick={() => {
                           if (invite.secret_key) {
@@ -82,7 +81,6 @@ export const UserList = ({ onRevoke }: UserListProps) => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
-                        withDecorations={false}
                         size="icon"
                         className="h-8 w-8 text-muted-foreground hover:text-destructive"
                         onClick={() => invite.uuid && onRevoke(invite.uuid)}
