@@ -25,6 +25,7 @@ const translation: i18nLanguage = {
     usernameRequired: "Username is required",
     accountCreatedSuccess: "Account created successfully! Please log in to create your profile.",
     accountCreateError: 'Failed to create account. "{{error}}"',
+    createGameServerSuccess: "Game Server created successfully!",
   },
   userModal: {
     title: "Users",

@@ -26,6 +26,7 @@ const translation: i18nLanguage = {
     accountCreatedSuccess:
       "Konto erfolgreich erstellt! Melde dich jetzt an, um dein Profil zu erstellen.",
     accountCreateError: 'Fehler beim Erstellen des Kontos. "{{error}}"',
+    createGameServerSuccess: "Gameserver erfolgreich erstellt!",
   },
   userModal: {
     title: "Benutzer",

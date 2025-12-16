@@ -23,6 +23,7 @@ export type i18nLanguage = {
     usernameRequired: string;
     accountCreatedSuccess: string;
     accountCreateError: ContainsVariable<"error">;
+    createGameServerSuccess: string;
   };
   userModal: {
     title: string;
