@@ -44,17 +44,17 @@ export const InviteForm = ({
           }}
         />
         <p className="text-xs text-muted-foreground">{t("userModal.usernameDescription")}</p>
-        <label htmlFor="invite-username">Role</label>
+        <label htmlFor="invite-rol">{t("userModal.roleLabel")}</label>
         <Select defaultValue={userRole} onValueChange={onUserRoleChange}>
-          <SelectTrigger id={"invite-username"}>
-            <SelectValue placeholder={"User Role"} />
+          <SelectTrigger id={"invite-role"}>
+            <SelectValue placeholder={t("userModal.rolePlaceholder")} />
           </SelectTrigger>
           <SelectContent>
             {Object.keys(UserEntityDtoRole)
               .filter((role) => role !== UserEntityDtoRole.OWNER)
               .map((role) => (
                 <SelectItem value={role} key={role}>
-                  {role}
+                  {t("userRoles." + role)}
                 </SelectItem>
               ))}
           </SelectContent>

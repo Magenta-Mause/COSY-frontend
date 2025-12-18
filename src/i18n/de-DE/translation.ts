@@ -1,4 +1,4 @@
-import type { i18nLanguage } from "@/i18n/i18nKeys";
+import type {i18nLanguage} from "@/i18n/i18nKeys";
 
 const translation: i18nLanguage = {
   overviewPage: {
@@ -39,8 +39,7 @@ const translation: i18nLanguage = {
     cancel: "Abbrechen",
     generateInvite: "Einladung erstellen",
     creating: "Erstelle...",
-    shareInstructions:
-      "Teilen Sie diesen Link mit der Person, die Sie einladen möchten. Sie kann ihn nutzen, um ihr Konto zu erstellen.",
+    shareInstructions: "Teilen Sie diesen Link mit der Person, die Sie einladen möchten. Sie kann ihn nutzen, um ihr Konto zu erstellen.",
     copyLink: "Einladungslink kopieren",
     backToUsers: "Zurück zu Benutzern",
     pendingInvites: "Ausstehende Einladungen",
@@ -48,6 +47,12 @@ const translation: i18nLanguage = {
     created: "Erstellt: {{date}}",
     revokeTooltip: "Einladung widerrufen",
     copyTooltip: "Klicken zum Kopieren",
+    roleLabel: "Benutzerrolle",
+  },
+  userRoles: {
+    QUOTA_USER: "Nutzer",
+    ADMIN: "Admin",
+    OWNER: "Besitzer"
   },
   inviteRedemption: {
     title: "Einladung annehmen",

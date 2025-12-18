@@ -24,7 +24,7 @@ export const UserList = ({ onRevoke }: UserListProps) => {
             <UserCircle className="h-8 w-8 text-gray-400" />
             <div className="flex-1">
               <p className="font-semibold">{user.username}</p>
-              <p className="text-sm text-gray-500">{user.role}</p>
+              <p className="text-sm text-gray-500">{t("userRoles." + user.role)}</p>
             </div>
           </div>
           {index < users.length - 1 && <Separator />}
