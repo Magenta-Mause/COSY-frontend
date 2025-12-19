@@ -54,7 +54,7 @@ export const InviteForm = ({
               .filter((role) => role !== UserEntityDtoRole.OWNER)
               .map((role) => (
                 <SelectItem value={role} key={role}>
-                  {t("userRoles." + role)}
+                  {t(`userRoles.${role}`)}
                 </SelectItem>
               ))}
           </SelectContent>

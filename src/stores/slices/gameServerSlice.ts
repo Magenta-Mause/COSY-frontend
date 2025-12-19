@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { GameServerDto } from "@/api/generated/model";
 import type { SliceState } from "@/stores";
-import type {GameServerDto} from "@/api/generated/model";
 
 const gameServerSlice = createSlice({
   name: "game-server-slice",

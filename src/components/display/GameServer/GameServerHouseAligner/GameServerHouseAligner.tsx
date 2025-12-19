@@ -1,7 +1,7 @@
 import ConstructionPlaceHouse from "@components/display/GameServer/ConstructionPlaceHouse/ConstructionPlaceHouse.tsx";
 import GameServerHouse from "@components/display/GameServer/GameServerHouse/GameServerHouse.tsx";
 import calculateCoordinate from "@components/display/GameServer/GameServerHouseAligner/calculateCoordinate.ts";
-import type {GameServerDto} from "@/api/generated/model";
+import type { GameServerDto } from "@/api/generated/model";
 
 const GameServerHouseAligner = (props: { gameServers: GameServerDto[] }) => {
   const getStyle = (index: number): React.CSSProperties => {
